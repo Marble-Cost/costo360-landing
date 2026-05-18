@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Costo360 — Plataforma de Costos para Talleres de Piedra</title>
+  <meta name="description" content="Cotiza, optimiza y controla cada proyecto con precisión industrial y la potencia de la IA. La plataforma B2B para talleres de mármol, granito y piedra en Colombia." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary:   '#1F6F54',
+            'primary-light': '#2A9070',
+            'primary-dark':  '#165A43',
+            gold:      '#C9A45C',
+            'gold-light': '#DDB97A',
+            dark:      '#0F1A14',
+            'dark-2':  '#162019',
+            'dark-3':  '#1E2D23',
+            'dark-4':  '#243328',
+          },
+          fontFamily: {
+            sans:   ['"Plus Jakarta Sans"', 'sans-serif'],
+            serif:  ['"Playfair Display"', 'serif'],
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    :root {
+      --primary: #1F6F54;
+      --gold:    #C9A45C;
+      --dark:    #0F1A14;
+    }
+
+    body {
+      background-color: #0F1A14;
+      color: #E8F0EB;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── Noise overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* ── Glass card ── */
+    .glass {
+      background: rgba(31, 111, 84, 0.07);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(201, 164, 92, 0.12);
+    }
+
+    .glass-light {
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    /* ── Gradient text ── */
+    .text-gradient {
+      background: linear-gradient(135deg, #C9A45C 0%, #E8D5A3 50%, #C9A45C 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .text-gradient-green {
+      background: linear-gradient(135deg, #2A9070 0%, #C9A45C 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── Glow ── */
+    .glow-green {
+      box-shadow: 0 0 40px rgba(31, 111, 84, 0.35), 0 0 80px rgba(31, 111, 84, 0.12);
+    }
+
+    .glow-gold {
+      box-shadow: 0 0 30px rgba(201, 164, 92, 0.25);
+    }
+
+    /* ── Scroll reveal ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-5 { transition-delay: 0.5s; }
+    .reveal-delay-6 { transition-delay: 0.6s; }
+
+    /* ── Hero background ── */
+    .hero-bg {
+      background:
+        radial-gradient(ellipse 80% 60% at 50% -10%, rgba(31,111,84,0.45) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 85% 50%, rgba(201,164,92,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 10% 80%, rgba(31,111,84,0.18) 0%, transparent 60%),
+        #0F1A14;
+    }
+
+    /* ── Marble texture ── */
+    .marble-texture {
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.015 0.008' numOctaves='6' seed='2' result='t'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='t' scale='30' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3Crect width='400' height='400' fill='%231F6F54' filter='url(%23m)' opacity='0.05'/%3E%3C/svg%3E");
+    }
+
+    /* ── Particles ── */
+    #particles-canvas {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    /* ── Navbar ── */
+    .navbar-blur {
+      background: rgba(15, 26, 20, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(31, 111, 84, 0.2);
+    }
+
+    /* ── Pricing card ── */
+    .pricing-popular {
+      border-color: #C9A45C !important;
+      box-shadow: 0 0 40px rgba(201,164,92,0.2), 0 0 0 1px rgba(201,164,92,0.3);
+    }
+
+    /* ── FAQ ── */
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.3s ease;
+    }
+    .faq-answer.open {
+      max-height: 300px;
+    }
+
+    /* ── Animated border ── */
+    .animated-border {
+      position: relative;
+    }
+    .animated-border::after {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(135deg, #1F6F54, #C9A45C, #1F6F54);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .animated-border:hover::after {
+      opacity: 1;
+    }
+
+    /* ── Section divider ── */
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(31,111,84,0.4), rgba(201,164,92,0.3), transparent);
+    }
+
+    /* ── Step connector ── */
+    .step-connector {
+      background: linear-gradient(180deg, #1F6F54 0%, rgba(31,111,84,0.1) 100%);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; }
+      * { animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════
+     NAVBAR
+════════════════════════════════════════ -->
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+  <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+    <!-- Logo -->
+    <a href="#" class="flex items-center gap-2.5 cursor-pointer" aria-label="Costo360 home">
+      <div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center glow-green flex-shrink-0">
+        <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10" />
+        </svg>
+      </div>
+      <span class="font-serif font-semibold text-xl text-white">Costo<span class="text-gold">360</span></span>
+    </a>
+
+    <!-- Desktop links -->
+    <ul class="hidden md:flex items-center gap-8 text-sm font-medium text-white/60">
+      <li><a href="#features" class="hover:text-white transition-colors duration-200 cursor-pointer">Funciones</a></li>
+      <li><a href="#como-funciona" class="hover:text-white transition-colors duration-200 cursor-pointer">Cómo funciona</a></li>
+      <li><a href="#precios" class="hover:text-white transition-colors duration-200 cursor-pointer">Precios</a></li>
+      <li><a href="#faq" class="hover:text-white transition-colors duration-200 cursor-pointer">FAQ</a></li>
+    </ul>
+
+    <!-- CTAs -->
+    <div class="flex items-center gap-3">
+      <a href="#" class="hidden sm:inline-flex text-sm font-medium text-white/70 hover:text-white transition-colors duration-200 cursor-pointer">Iniciar sesión</a>
+      <a href="#" class="inline-flex items-center gap-1.5 bg-primary hover:bg-primary-light text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors duration-200 cursor-pointer glow-green">
+        Empieza Gratis
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════════
+     HERO
+════════════════════════════════════════ -->
+<section class="hero-bg relative min-h-screen flex flex-col items-center justify-center pt-16 overflow-hidden">
+  <canvas id="particles-canvas" aria-hidden="true"></canvas>
+
+  <!-- Marble veins decoration -->
+  <div class="absolute inset-0 marble-texture pointer-events-none opacity-30" aria-hidden="true"></div>
+
+  <!-- Glow orbs -->
+  <div class="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-primary/10 blur-3xl pointer-events-none" aria-hidden="true"></div>
+  <div class="absolute bottom-1/3 right-1/4 w-64 h-64 rounded-full bg-gold/8 blur-3xl pointer-events-none" aria-hidden="true"></div>
+
+  <div class="relative z-10 max-w-5xl mx-auto px-6 text-center">
+    <!-- Badge -->
+    <div class="inline-flex items-center gap-2 glass px-4 py-2 rounded-full text-sm font-medium text-gold mb-8 reveal">
+      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.27 5.82 21 7 14.14 2 9.27l6.91-1.01L12 2z"/>
+      </svg>
+      Plataforma B2B para talleres de piedra
+    </div>
+
+    <!-- Headline -->
+    <h1 class="font-serif font-bold text-5xl sm:text-6xl md:text-7xl text-white leading-tight mb-6 reveal reveal-delay-1">
+      Cotiza con<br />
+      <span class="text-gradient">precisión industrial</span>
+    </h1>
+
+    <p class="text-lg sm:text-xl text-white/60 max-w-2xl mx-auto mb-10 leading-relaxed reveal reveal-delay-2">
+      Costo360 es la plataforma B2B que permite a talleres de mármol, granito y piedra cotizar, optimizar cortes y controlar proyectos con la potencia de la IA.
+    </p>
+
+    <!-- CTAs -->
+    <div class="flex flex-col sm:flex-row gap-4 justify-center mb-16 reveal reveal-delay-3">
+      <a href="#" class="inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-light text-white font-semibold text-base px-8 py-4 rounded-xl transition-all duration-200 cursor-pointer glow-green">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+        </svg>
+        Empieza Gratis
+      </a>
+      <a href="#como-funciona" class="inline-flex items-center justify-center gap-2 glass-light text-white font-semibold text-base px-8 py-4 rounded-xl transition-all duration-200 cursor-pointer hover:border-white/20">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        Ver Demo
+      </a>
+    </div>
+
+    <!-- Stats -->
+    <div class="flex flex-col sm:flex-row gap-8 sm:gap-16 justify-center items-center reveal reveal-delay-4">
+      <div class="text-center">
+        <p class="font-serif text-3xl font-bold text-gradient">+200</p>
+        <p class="text-sm text-white/50 mt-1">Talleres activos</p>
+      </div>
+      <div class="hidden sm:block w-px h-10 bg-white/10"></div>
+      <div class="text-center">
+        <p class="font-serif text-3xl font-bold text-gradient">85%</p>
+        <p class="text-sm text-white/50 mt-1">Menos tiempo cotizando</p>
+      </div>
+      <div class="hidden sm:block w-px h-10 bg-white/10"></div>
+      <div class="text-center">
+        <p class="font-serif text-3xl font-bold text-gradient">$0</p>
+        <p class="text-sm text-white/50 mt-1">Para empezar</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/30 text-xs animate-bounce" aria-hidden="true">
+    <span class="tracking-widest uppercase text-[10px]">Scroll</span>
+    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+    </svg>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ════════════════════════════════════════
+     PROBLEMA / SOLUCIÓN
+════════════════════════════════════════ -->
+<section class="py-24 relative" id="problema">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-16 reveal">
+      <p class="text-primary font-semibold text-sm uppercase tracking-widest mb-3">El problema real</p>
+      <h2 class="font-serif text-4xl md:text-5xl font-bold text-white mb-4">
+        ¿Cuánto tiempo pierdes<br />
+        <span class="text-gradient">cotizando a mano?</span>
+      </h2>
+      <p class="text-white/50 text-lg max-w-xl mx-auto">La mayoría de talleres pierden horas en cálculos manuales, errores de precios y materiales desperdiciados.</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+      <!-- Pain points -->
+      <div class="glass rounded-2xl p-8 reveal reveal-delay-1">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-8 h-8 rounded-full bg-red-500/15 flex items-center justify-center flex-shrink-0">
+            <svg class="w-4 h-4 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </div>
+          <h3 class="text-white font-semibold text-lg">Sin Costo360</h3>
+        </div>
+        <ul class="space-y-4">
+          <li class="flex items-start gap-3 text-white/60">
+            <svg class="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+            Horas calculando materiales, mano de obra y logística en hojas de cálculo
+          </li>
+          <li class="flex items-start gap-3 text-white/60">
+            <svg class="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+            Errores humanos que generan pérdidas en proyectos grandes
+          </li>
+          <li class="flex items-start gap-3 text-white/60">
+            <svg class="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+            Retales sin inventario: material valioso perdido o mal gestionado
+          </li>
+          <li class="flex items-start gap-3 text-white/60">
+            <svg class="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+            Cortes ineficientes que desperdician losas de mármol o granito
+          </li>
+          <li class="flex items-start gap-3 text-white/60">
+            <svg class="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+            Sin reportes profesionales para entregar al cliente
+          </li>
+        </ul>
+      </div>
+
+      <!-- Solution -->
+      <div class="glass rounded-2xl p-8 border border-primary/30 reveal reveal-delay-2" style="box-shadow:0 0 40px rgba(31,111,84,0.15)">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+            <svg class="w-4 h-4 text-primary-light" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <h3 class="text-white font-semibold text-lg">Con Costo360</h3>
+        </div>
+        <ul class="space-y-4">
+          <li class="flex items-start gap-3 text-white/80">
+            <svg class="w-5 h-5 text-primary-light flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            Cotizaciones completas en minutos con motor de cálculo automático
+          </li>
+          <li class="flex items-start gap-3 text-white/80">
+            <svg class="w-5 h-5 text-primary-light flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            Precisión industrial con parámetros configurados a tu taller
+          </li>
+          <li class="flex items-start gap-3 text-white/80">
+            <svg class="w-5 h-5 text-primary-light flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            Banco de retales digital con recuperación real de m²
+          </li>
+          <li class="flex items-start gap-3 text-white/80">
+            <svg class="w-5 h-5 text-primary-light flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            Nesting inteligente que maximiza el aprovechamiento de cada losa
+          </li>
+          <li class="flex items-start gap-3 text-white/80">
+            <svg class="w-5 h-5 text-primary-light flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            Reportes PDF con tu marca listos para el cliente en segundos
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ════════════════════════════════════════
+     FEATURES
+════════════════════════════════════════ -->
+<section class="py-24" id="features">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-16 reveal">
+      <p class="text-gold font-semibold text-sm uppercase tracking-widest mb-3">Funcionalidades</p>
+      <h2 class="font-serif text-4xl md:text-5xl font-bold text-white mb-4">
+        Todo lo que tu taller<br />
+        <span class="text-gradient-green">necesita, en un solo lugar</span>
+      </h2>
+      <p class="text-white/50 text-lg max-w-xl mx-auto">Desde la primera medida hasta el PDF final, Costo360 cubre cada paso del proceso.</p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Feature 1 -->
+      <article class="glass rounded-2xl p-7 animated-border cursor-pointer hover:border-primary/40 transition-all duration-300 reveal reveal-delay-1 group">
+        <div class="w-12 h-12 rounded-xl bg-primary/15 flex items-center justify-center mb-5 group-hover:bg-primary/25 transition-colors duration-300">
+          <svg class="w-6 h-6 text-primary-light" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+          </svg>
+        </div>
+        <h3 class="text-white font-semibold text-lg mb-2">Cotización Directa</h3>
+        <p class="text-white/55 text-sm leading-relaxed">Genera presupuestos precisos por material, mano de obra y logística. Motor de cálculo configurado con tarifas reales de tu taller.</p>
+        <div class="mt-4 flex items-center gap-1.5 text-primary-light text-sm font-medium">
+          <span>Ver más</span>
+          <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </div>
+      </article>
+
+      <!-- Feature 2 -->
+      <article class="glass rounded-2xl p-7 animated-border cursor-pointer hover:border-primary/40 transition-all duration-300 reveal reveal-delay-2 group">
+        <div class="w-12 h-12 rounded-xl bg-gold/10 flex items-center justify-center mb-5 group-hover:bg-gold/20 transition-colors duration-300">
+          <svg class="w-6 h-6 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+          </svg>
+        </div>
+        <h3 class="text-white font-semibold text-lg mb-2">Cotización AIU</h3>
+        <p class="text-white/55 text-sm leading-relaxed">Calcula Administración, Imprevistos y Utilidades de forma profesional. Ideal para proyectos de obra con estructura de costos formal.</p>
+        <div class="mt-4 flex items-center gap-1.5 text-gold text-sm font-medium">
+          <span>Ver más</span>
+          <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </div>
+      </article>
+
+      <!-- Feature 3 -->
+      <article class="glass rounded-2xl p-7 animated-border cursor-pointer hover:border-primary/40 transition-all duration-300 reveal reveal-delay-3 group">
+        <div class="w-12 h-12 rounded-xl bg-primary/15 flex items-center justify-center mb-5 group-hover:bg-primary/25 transition-colors duration-300">
+          <svg class="w-6 h-6 text-primary-light" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+          </svg>
+        </div>
+        <h3 class="text-white font-semibold text-lg mb-2">Banco de Retales</h3>
+        <p class="text-white/55 text-sm leading-relaxed">Administra tu inventario de sobrantes y recupera el valor real de cada m². Nunca pierdas registro de material disponible en tu taller.</p>
+        <div class="mt-4 flex items-center gap-1.5 text-primary-light text-sm font-medium">
+          <span>Ver más</span>
+          <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </div>
+      </article>
+
+      <!-- Feature 4 -->
+      <article class="glass rounded-2xl p-7 animated-border cursor-pointer hover:border-primary/40 transition-all duration-300 reveal reveal-delay-4 group">
+        <div class="w-12 h-12 rounded-xl bg-gold/10 flex items-center justify-center mb-5 group-hover:bg-gold/20 transition-colors duration-300">
+          <svg class="w-6 h-6 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1V5zm10 0a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1v-4zm10 0a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z" />
+          </svg>
+        </div>
+        <h3 class="text-white font-semibold text-lg mb-2">Nesting Inteligente</h3>
+        <p class="text-white/55 text-sm leading-relaxed">Optimización 2D de cortes con algoritmos industriales para reducir el desperdicio de material en cada proyecto y maximizar el rendimiento de losas.</p>
+        <div class="mt-4 flex items-center gap-1.5 text-gold text-sm font-medium">
+          <span>Ver más</span>
+          <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </div>
+      </article>
+
+      <!-- Feature 5 -->
+      <article class="glass rounded-2xl p-7 animated-border cursor-pointer hover:border-primary/40 transition-all duration-300 reveal reveal-delay-5 group">
+        <div class="w-12 h-12 rounded-xl bg-primary/15 flex items-center justify-center mb-5 group-hover:bg-primary/25 transition-colors duration-300">
+          <svg class="w-6 h-6 text-primary-light" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
+          </svg>
+        </div>
+        <h3 class="text-white font-semibold text-lg mb-2">Asistente IA</h3>
+        <p class="text-white/55 text-sm leading-relaxed">Copiloto potenciado con inteligencia artificial para interpretar proyectos complejos, sugerir parámetros y responder dudas técnicas en tiempo real.</p>
+        <div class="mt-4 flex items-center gap-1.5 text-primary-light text-sm font-medium">
+          <span>Ver más</span>
+          <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </div>
+      </article>
+
+      <!-- Feature 6 -->
+      <article class="glass rounded-2xl p-7 animated-border cursor-pointer hover:border-primary/40 transition-all duration-300 reveal reveal-delay-6 group">
+        <div class="w-12 h-12 rounded-xl bg-gold/10 flex items-center justify-center mb-5 group-hover:bg-gold/20 transition-colors duration-300">
+          <svg class="w-6 h-6 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+          </svg>
+        </div>
+        <h3 class="text-white font-semibold text-lg mb-2">Reportes PDF</h3>
+        <p class="text-white/55 text-sm leading-relaxed">Exporta cotizaciones, planos y reportes con tu marca en segundos. Presenta propuestas profesionales que generan confianza y cierran más proyectos.</p>
+        <div class="mt-4 flex items-center gap-1.5 text-gold text-sm font-medium">
+          <span>Ver más</span>
+          <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ════════════════════════════════════════
+     CÓMO FUNCIONA
+════════════════════════════════════════ -->
+<section class="py-24 relative" id="como-funciona">
+  <!-- bg accent -->
+  <div class="absolute inset-0 bg-gradient-to-b from-dark via-dark-2 to-dark pointer-events-none" aria-hidden="true"></div>
+
+  <div class="relative max-w-7xl mx-auto px-6">
+    <div class="text-center mb-16 reveal">
+      <p class="text-primary font-semibold text-sm uppercase tracking-widest mb-3">Proceso</p>
+      <h2 class="font-serif text-4xl md:text-5xl font-bold text-white mb-4">
+        En 3 pasos estás<br />
+        <span class="text-gradient">listo para cotizar</span>
+      </h2>
+      <p class="text-white/50 text-lg max-w-xl mx-auto">Sin instalaciones, sin configuraciones complejas. Empieza en minutos.</p>
+    </div>
+
+    <div class="relative max-w-4xl mx-auto">
+      <!-- Connector line (desktop) -->
+      <div class="hidden md:block absolute top-16 left-1/2 -translate-x-1/2 w-px h-[calc(100%-8rem)] step-connector" aria-hidden="true"></div>
+
+      <div class="space-y-12">
+        <!-- Step 1 -->
+        <div class="flex flex-col md:flex-row items-center gap-8 reveal reveal-delay-1">
+          <div class="md:w-1/2 md:text-right order-2 md:order-1">
+            <h3 class="text-white font-semibold text-2xl mb-2 font-serif">Configura tu taller</h3>
+            <p class="text-white/55 leading-relaxed">Ingresa tus tarifas de materiales, mano de obra, logística y parámetros específicos. El asistente IA te guía en la configuración inicial.</p>
+          </div>
+          <div class="relative z-10 w-16 h-16 rounded-full bg-primary flex items-center justify-center flex-shrink-0 order-1 md:order-2 glow-green">
+            <span class="text-white font-bold text-xl font-serif">1</span>
+          </div>
+          <div class="md:w-1/2 order-3">
+            <div class="glass rounded-xl p-5">
+              <div class="flex items-center gap-2 mb-3">
+                <div class="w-3 h-3 rounded-full bg-red-500/60"></div>
+                <div class="w-3 h-3 rounded-full bg-yellow-500/60"></div>
+                <div class="w-3 h-3 rounded-full bg-green-500/60"></div>
+                <div class="flex-1 h-5 bg-white/5 rounded ml-2"></div>
+              </div>
+              <div class="space-y-2">
+                <div class="flex justify-between items-center">
+                  <span class="text-white/40 text-xs">Mármol Carrara — m²</span>
+                  <span class="text-gold text-xs font-medium">$180,000 COP</span>
+                </div>
+                <div class="flex justify-between items-center">
+                  <span class="text-white/40 text-xs">Mano de obra cantos</span>
+                  <span class="text-gold text-xs font-medium">$60,000/ml</span>
+                </div>
+                <div class="flex justify-between items-center">
+                  <span class="text-white/40 text-xs">Flete externo</span>
+                  <span class="text-gold text-xs font-medium">$165,000/viaje</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="flex flex-col md:flex-row items-center gap-8 reveal reveal-delay-2">
+          <div class="md:w-1/2 order-3 md:order-1">
+            <div class="glass rounded-xl p-5">
+              <div class="text-xs text-white/30 mb-2 font-mono">cotizacion_001.json</div>
+              <div class="space-y-2">
+                <div class="h-2 bg-primary/30 rounded w-3/4"></div>
+                <div class="h-2 bg-primary/20 rounded w-full"></div>
+                <div class="h-2 bg-primary/20 rounded w-5/6"></div>
+                <div class="mt-3 flex items-center gap-2">
+                  <div class="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+                  <span class="text-primary-light text-xs">Calculando AIU…</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="relative z-10 w-16 h-16 rounded-full bg-gold flex items-center justify-center flex-shrink-0 order-1 md:order-2 glow-gold">
+            <span class="text-dark font-bold text-xl font-serif">2</span>
+          </div>
+          <div class="md:w-1/2 order-2 md:order-3">
+            <h3 class="text-white font-semibold text-2xl mb-2 font-serif">Crea tu cotización</h3>
+            <p class="text-white/55 leading-relaxed">Selecciona el tipo de proyecto, ingresa medidas y piezas. El motor calcula material, mano de obra, logística y AIU automáticamente.</p>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="flex flex-col md:flex-row items-center gap-8 reveal reveal-delay-3">
+          <div class="md:w-1/2 md:text-right order-2 md:order-1">
+            <h3 class="text-white font-semibold text-2xl mb-2 font-serif">Exporta y gana</h3>
+            <p class="text-white/55 leading-relaxed">Genera el PDF con tu logo, presenta al cliente y cierra el proyecto. Guarda el historial para análisis y referencias futuras.</p>
+          </div>
+          <div class="relative z-10 w-16 h-16 rounded-full bg-primary flex items-center justify-center flex-shrink-0 order-1 md:order-2 glow-green">
+            <span class="text-white font-bold text-xl font-serif">3</span>
+          </div>
+          <div class="md:w-1/2 order-3">
+            <div class="glass rounded-xl p-5 border border-primary/30">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2">
+                  <div class="w-6 h-6 rounded bg-primary/20 flex items-center justify-center">
+                    <svg class="w-3.5 h-3.5 text-primary-light" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                  </div>
+                  <span class="text-white/60 text-xs">Cotización lista</span>
+                </div>
+                <span class="text-primary-light text-xs font-medium bg-primary/10 px-2 py-0.5 rounded-full">PDF</span>
+              </div>
+              <div class="text-white font-semibold text-sm">Cocina — Torre Diamante</div>
+              <div class="text-gold font-bold text-lg mt-1">$4,820,000 COP</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ════════════════════════════════════════
+     TESTIMONIALS
+════════════════════════════════════════ -->
+<section class="py-24" id="testimonios">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-16 reveal">
+      <p class="text-gold font-semibold text-sm uppercase tracking-widest mb-3">Testimonios</p>
+      <h2 class="font-serif text-4xl md:text-5xl font-bold text-white mb-4">
+        Talleres que ya<br />
+        <span class="text-gradient">trabajan más inteligente</span>
+      </h2>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      <!-- Testimonial 1 -->
+      <blockquote class="glass rounded-2xl p-7 flex flex-col gap-5 reveal reveal-delay-1">
+        <div class="flex gap-1" aria-label="5 de 5 estrellas">
+          <svg class="w-4 h-4 text-gold" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-gold" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-gold" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-gold" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-gold" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+        </div>
+        <p class="text-white/75 text-sm leading-relaxed flex-1">
+          "Antes me tomaba 3 horas hacer una cotización de cocina completa. Con Costo360 lo tengo listo en 20 minutos con el PDF incluido. Mis clientes quedan impresionados con la presentación."
+        </p>
+        <footer class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-primary/30 flex items-center justify-center flex-shrink-0 font-serif font-bold text-primary-light text-sm" aria-hidden="true">CR</div>
+          <div>
+            <div class="text-white font-semibold text-sm">Carlos Rincón</div>
+            <div class="text-white/40 text-xs">Mármoles Rincón, Barranquilla</div>
+          </div>
+        </footer>
+      </blockquote>
+
+      <!-- Testimonial 2 -->
+      <blockquote class="glass rounded-2xl p-7 flex flex-col gap-5 border border-gold/20 reveal reveal-delay-2" style="box-shadow:0 0 30px rgba(201,164,92,0.1)">
+        <div class="flex gap-1" aria-label="5 de 5 estrellas">
+          <svg class="w-4 h-4 text-gold" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-gold" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-gold" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-gold" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-gold" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+        </div>
+        <p class="text-white/75 text-sm leading-relaxed flex-1">
+          "El banco de retales cambió cómo manejamos el inventario. Ahora sabemos exactamente qué sobrantes tenemos y cuánto podemos recuperar. En 2 meses recuperamos material que valía más de 8 millones de pesos."
+        </p>
+        <footer class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-gold/20 flex items-center justify-center flex-shrink-0 font-serif font-bold text-gold text-sm" aria-hidden="true">ML</div>
+          <div>
+            <div class="text-white font-semibold text-sm">María López</div>
+            <div class="text-white/40 text-xs">Granitos del Caribe, Bogotá</div>
+          </div>
+        </footer>
+      </blockquote>
+
+      <!-- Testimonial 3 -->
+      <blockquote class="glass rounded-2xl p-7 flex flex-col gap-5 reveal reveal-delay-3">
+        <div class="flex gap-1" aria-label="5 de 5 estrellas">
+          <svg class="w-4 h-4 text-gold" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-gold" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-gold" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-gold" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-gold" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+        </div>
+        <p class="text-white/75 text-sm leading-relaxed flex-1">
+          "El nesting inteligente nos ahorró un 18% en desperdicio de sinterizado el primer mes. Con losas a ese precio, es un ahorro enorme. La plataforma se pagó sola en la primera semana de uso."
+        </p>
+        <footer class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-primary/30 flex items-center justify-center flex-shrink-0 font-serif font-bold text-primary-light text-sm" aria-hidden="true">JP</div>
+          <div>
+            <div class="text-white font-semibold text-sm">Julián Pedraza</div>
+            <div class="text-white/40 text-xs">Sinterizados JPA, Medellín</div>
+          </div>
+        </footer>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ════════════════════════════════════════
+     PRICING
+════════════════════════════════════════ -->
+<section class="py-24" id="precios">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-16 reveal">
+      <p class="text-primary font-semibold text-sm uppercase tracking-widest mb-3">Precios</p>
+      <h2 class="font-serif text-4xl md:text-5xl font-bold text-white mb-4">
+        Planes para cada<br />
+        <span class="text-gradient">tamaño de taller</span>
+      </h2>
+      <p class="text-white/50 text-lg max-w-xl mx-auto">Sin compromisos a largo plazo. Cancela cuando quieras.</p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+      <!-- Básico -->
+      <div class="glass rounded-2xl p-8 flex flex-col reveal reveal-delay-1">
+        <div class="mb-6">
+          <div class="text-white/50 text-sm font-medium mb-1">Básico</div>
+          <div class="flex items-end gap-1">
+            <span class="font-serif text-4xl font-bold text-white">Gratis</span>
+          </div>
+          <p class="text-white/40 text-xs mt-2">Para conocer la plataforma</p>
+        </div>
+        <ul class="space-y-3 flex-1 mb-8">
+          <li class="flex items-center gap-2 text-sm text-white/60">
+            <svg class="w-4 h-4 text-primary-light flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            5 cotizaciones por mes
+          </li>
+          <li class="flex items-center gap-2 text-sm text-white/60">
+            <svg class="w-4 h-4 text-primary-light flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            Cotización Directa
+          </li>
+          <li class="flex items-center gap-2 text-sm text-white/60">
+            <svg class="w-4 h-4 text-primary-light flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            Exportación PDF básica
+          </li>
+          <li class="flex items-center gap-2 text-sm text-white/60">
+            <svg class="w-4 h-4 text-primary-light flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            1 usuario
+          </li>
+          <li class="flex items-center gap-2 text-sm text-white/30">
+            <svg class="w-4 h-4 text-white/20 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+            Asistente IA
+          </li>
+          <li class="flex items-center gap-2 text-sm text-white/30">
+            <svg class="w-4 h-4 text-white/20 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+            Nesting inteligente
+          </li>
+        </ul>
+        <a href="#" class="block text-center glass-light text-white font-semibold py-3 rounded-xl hover:bg-white/10 transition-colors duration-200 cursor-pointer text-sm">
+          Empieza gratis
+        </a>
+      </div>
+
+      <!-- Pro (Popular) -->
+      <div class="glass rounded-2xl p-8 flex flex-col pricing-popular relative reveal reveal-delay-2">
+        <div class="absolute -top-3 left-1/2 -translate-x-1/2">
+          <span class="bg-gold text-dark text-xs font-bold px-4 py-1 rounded-full tracking-wide">MÁS POPULAR</span>
+        </div>
+        <div class="mb-6">
+          <div class="text-gold text-sm font-medium mb-1">Pro</div>
+          <div class="flex items-end gap-1">
+            <span class="font-serif text-4xl font-bold text-white">$49.000</span>
+          </div>
+          <p class="text-white/40 text-xs mt-2">COP / mes · facturación mensual</p>
+        </div>
+        <ul class="space-y-3 flex-1 mb-8">
+          <li class="flex items-center gap-2 text-sm text-white/80">
+            <svg class="w-4 h-4 text-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            Cotizaciones ilimitadas
+          </li>
+          <li class="flex items-center gap-2 text-sm text-white/80">
+            <svg class="w-4 h-4 text-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            Cotización Directa + AIU
+          </li>
+          <li class="flex items-center gap-2 text-sm text-white/80">
+            <svg class="w-4 h-4 text-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            PDF con tu marca
+          </li>
+          <li class="flex items-center gap-2 text-sm text-white/80">
+            <svg class="w-4 h-4 text-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            Banco de Retales
+          </li>
+          <li class="flex items-center gap-2 text-sm text-white/80">
+            <svg class="w-4 h-4 text-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            Nesting inteligente
+          </li>
+          <li class="flex items-center gap-2 text-sm text-white/80">
+            <svg class="w-4 h-4 text-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            Asistente IA incluido
+          </li>
+          <li class="flex items-center gap-2 text-sm text-white/80">
+            <svg class="w-4 h-4 text-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            Hasta 3 usuarios
+          </li>
+        </ul>
+        <a href="#" class="block text-center bg-gold hover:bg-gold-light text-dark font-bold py-3 rounded-xl transition-colors duration-200 cursor-pointer text-sm glow-gold">
+          Empezar con Pro
+        </a>
+      </div>
+
+      <!-- Empresa -->
+      <div class="glass rounded-2xl p-8 flex flex-col reveal reveal-delay-3">
+        <div class="mb-6">
+          <div class="text-white/50 text-sm font-medium mb-1">Empresa</div>
+          <div class="flex items-end gap-1">
+            <span class="font-serif text-4xl font-bold text-white">Custom</span>
+          </div>
+          <p class="text-white/40 text-xs mt-2">Para talleres grandes y cadenas</p>
+        </div>
+        <ul class="space-y-3 flex-1 mb-8">
+          <li class="flex items-center gap-2 text-sm text-white/60">
+            <svg class="w-4 h-4 text-primary-light flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            Todo lo de Pro
+          </li>
+          <li class="flex items-center gap-2 text-sm text-white/60">
+            <svg class="w-4 h-4 text-primary-light flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            Usuarios ilimitados
+          </li>
+          <li class="flex items-center gap-2 text-sm text-white/60">
+            <svg class="w-4 h-4 text-primary-light flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            Roles Admin / Operario
+          </li>
+          <li class="flex items-center gap-2 text-sm text-white/60">
+            <svg class="w-4 h-4 text-primary-light flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            Dashboard centralizado
+          </li>
+          <li class="flex items-center gap-2 text-sm text-white/60">
+            <svg class="w-4 h-4 text-primary-light flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            Soporte prioritario
+          </li>
+          <li class="flex items-center gap-2 text-sm text-white/60">
+            <svg class="w-4 h-4 text-primary-light flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            Integraciones a medida
+          </li>
+        </ul>
+        <a href="mailto:hola@costo360.co" class="block text-center glass-light text-white font-semibold py-3 rounded-xl hover:bg-white/10 transition-colors duration-200 cursor-pointer text-sm">
+          Hablar con ventas
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ════════════════════════════════════════
+     FAQ
+════════════════════════════════════════ -->
+<section class="py-24" id="faq">
+  <div class="max-w-3xl mx-auto px-6">
+    <div class="text-center mb-16 reveal">
+      <p class="text-gold font-semibold text-sm uppercase tracking-widest mb-3">Preguntas frecuentes</p>
+      <h2 class="font-serif text-4xl md:text-5xl font-bold text-white mb-4">
+        Todo lo que necesitas<br />
+        <span class="text-gradient-green">saber</span>
+      </h2>
+    </div>
+
+    <div class="space-y-3">
+      <!-- FAQ Item -->
+      <div class="glass rounded-xl overflow-hidden reveal reveal-delay-1">
+        <button class="faq-btn w-full flex items-center justify-between px-6 py-5 text-left cursor-pointer hover:bg-white/5 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary" aria-expanded="false">
+          <span class="text-white font-medium pr-4">¿Necesito instalar algo para usar Costo360?</span>
+          <svg class="faq-icon w-5 h-5 text-white/40 flex-shrink-0 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        <div class="faq-answer px-6">
+          <p class="text-white/60 text-sm leading-relaxed pb-5">No. Costo360 es 100% web. Solo necesitas un navegador y conexión a internet. Funciona desde cualquier computador, tablet o celular sin instalaciones.</p>
+        </div>
+      </div>
+
+      <div class="glass rounded-xl overflow-hidden reveal reveal-delay-2">
+        <button class="faq-btn w-full flex items-center justify-between px-6 py-5 text-left cursor-pointer hover:bg-white/5 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary" aria-expanded="false">
+          <span class="text-white font-medium pr-4">¿Puedo configurar mis propias tarifas de materiales y mano de obra?</span>
+          <svg class="faq-icon w-5 h-5 text-white/40 flex-shrink-0 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        <div class="faq-answer px-6">
+          <p class="text-white/60 text-sm leading-relaxed pb-5">Sí. La sección de Parámetros te permite configurar tarifas por material (mármol, granito, sinterizado, quarztone, quartzita), costos de mano de obra, logística y más. Todo queda guardado en tu cuenta.</p>
+        </div>
+      </div>
+
+      <div class="glass rounded-xl overflow-hidden reveal reveal-delay-3">
+        <button class="faq-btn w-full flex items-center justify-between px-6 py-5 text-left cursor-pointer hover:bg-white/5 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary" aria-expanded="false">
+          <span class="text-white font-medium pr-4">¿Cómo funciona el Asistente IA?</span>
+          <svg class="faq-icon w-5 h-5 text-white/40 flex-shrink-0 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        <div class="faq-answer px-6">
+          <p class="text-white/60 text-sm leading-relaxed pb-5">El asistente IA está integrado directamente en la plataforma. Puedes describir un proyecto en lenguaje natural y el asistente interpreta las dimensiones, sugiere parámetros y te ayuda a estructurar la cotización. También responde preguntas técnicas sobre materiales.</p>
+        </div>
+      </div>
+
+      <div class="glass rounded-xl overflow-hidden reveal reveal-delay-4">
+        <button class="faq-btn w-full flex items-center justify-between px-6 py-5 text-left cursor-pointer hover:bg-white/5 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary" aria-expanded="false">
+          <span class="text-white font-medium pr-4">¿Mis datos y cotizaciones están seguros?</span>
+          <svg class="faq-icon w-5 h-5 text-white/40 flex-shrink-0 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        <div class="faq-answer px-6">
+          <p class="text-white/60 text-sm leading-relaxed pb-5">Sí. Usamos PostgreSQL con Row Level Security (RLS) para aislar completamente los datos de cada taller. Tu información solo es visible para los usuarios de tu cuenta. Las sesiones usan tokens seguros con cifrado PBKDF2-SHA256.</p>
+        </div>
+      </div>
+
+      <div class="glass rounded-xl overflow-hidden reveal reveal-delay-5">
+        <button class="faq-btn w-full flex items-center justify-between px-6 py-5 text-left cursor-pointer hover:bg-white/5 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary" aria-expanded="false">
+          <span class="text-white font-medium pr-4">¿Puedo cancelar en cualquier momento?</span>
+          <svg class="faq-icon w-5 h-5 text-white/40 flex-shrink-0 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        <div class="faq-answer px-6">
+          <p class="text-white/60 text-sm leading-relaxed pb-5">Sí, sin compromisos ni penalizaciones. Si decides cancelar, tu plan se mantiene activo hasta el final del período pagado. Puedes exportar tu historial de cotizaciones antes de irte.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ════════════════════════════════════════
+     CTA FINAL
+════════════════════════════════════════ -->
+<section class="py-24 relative overflow-hidden" id="cta">
+  <div class="absolute inset-0 hero-bg opacity-60 pointer-events-none" aria-hidden="true"></div>
+  <div class="absolute inset-0 marble-texture opacity-20 pointer-events-none" aria-hidden="true"></div>
+
+  <div class="relative max-w-4xl mx-auto px-6 text-center">
+    <div class="reveal">
+      <p class="text-gold font-semibold text-sm uppercase tracking-widest mb-4">Empieza hoy</p>
+      <h2 class="font-serif text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
+        Tu taller merece<br />
+        <span class="text-gradient">herramientas de precisión</span>
+      </h2>
+      <p class="text-white/60 text-lg mb-10 max-w-xl mx-auto">
+        Únete a más de 200 talleres en Colombia que ya cotizan más rápido, pierden menos material y ganan más proyectos.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <a href="#" class="inline-flex items-center gap-2 bg-primary hover:bg-primary-light text-white font-bold text-base px-10 py-4 rounded-xl transition-all duration-200 cursor-pointer glow-green">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+          Empieza Gratis — Sin tarjeta
+        </a>
+        <p class="text-white/30 text-sm">¿Preguntas? <a href="mailto:hola@costo360.co" class="text-white/60 hover:text-white underline underline-offset-2 cursor-pointer transition-colors duration-200">hola@costo360.co</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════ -->
+<footer class="border-t border-white/8 py-12">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid md:grid-cols-4 gap-10 mb-10">
+      <!-- Brand -->
+      <div class="md:col-span-1">
+        <div class="flex items-center gap-2.5 mb-4">
+          <div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10" />
+            </svg>
+          </div>
+          <span class="font-serif font-semibold text-xl text-white">Costo<span class="text-gold">360</span></span>
+        </div>
+        <p class="text-white/40 text-sm leading-relaxed">Plataforma B2B de costos para talleres de piedra natural en Colombia.</p>
+        <div class="flex gap-3 mt-5">
+          <!-- LinkedIn -->
+          <a href="#" class="w-8 h-8 glass-light rounded-lg flex items-center justify-center text-white/40 hover:text-white hover:bg-white/10 transition-all duration-200 cursor-pointer" aria-label="LinkedIn">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+          </a>
+          <!-- Instagram -->
+          <a href="#" class="w-8 h-8 glass-light rounded-lg flex items-center justify-center text-white/40 hover:text-white hover:bg-white/10 transition-all duration-200 cursor-pointer" aria-label="Instagram">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+            </svg>
+          </a>
+          <!-- WhatsApp -->
+          <a href="#" class="w-8 h-8 glass-light rounded-lg flex items-center justify-center text-white/40 hover:text-white hover:bg-white/10 transition-all duration-200 cursor-pointer" aria-label="WhatsApp">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Product -->
+      <nav aria-label="Producto">
+        <h3 class="text-white font-semibold text-sm mb-4">Producto</h3>
+        <ul class="space-y-2.5">
+          <li><a href="#features" class="text-white/40 hover:text-white text-sm transition-colors duration-200 cursor-pointer">Funciones</a></li>
+          <li><a href="#como-funciona" class="text-white/40 hover:text-white text-sm transition-colors duration-200 cursor-pointer">Cómo funciona</a></li>
+          <li><a href="#precios" class="text-white/40 hover:text-white text-sm transition-colors duration-200 cursor-pointer">Precios</a></li>
+          <li><a href="#" class="text-white/40 hover:text-white text-sm transition-colors duration-200 cursor-pointer">Novedades</a></li>
+        </ul>
+      </nav>
+
+      <!-- Company -->
+      <nav aria-label="Empresa">
+        <h3 class="text-white font-semibold text-sm mb-4">Empresa</h3>
+        <ul class="space-y-2.5">
+          <li><a href="#" class="text-white/40 hover:text-white text-sm transition-colors duration-200 cursor-pointer">Nosotros</a></li>
+          <li><a href="#" class="text-white/40 hover:text-white text-sm transition-colors duration-200 cursor-pointer">Blog</a></li>
+          <li><a href="#" class="text-white/40 hover:text-white text-sm transition-colors duration-200 cursor-pointer">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <!-- Legal -->
+      <nav aria-label="Legal">
+        <h3 class="text-white font-semibold text-sm mb-4">Legal</h3>
+        <ul class="space-y-2.5">
+          <li><a href="#" class="text-white/40 hover:text-white text-sm transition-colors duration-200 cursor-pointer">Privacidad</a></li>
+          <li><a href="#" class="text-white/40 hover:text-white text-sm transition-colors duration-200 cursor-pointer">Términos de uso</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="border-t border-white/8 pt-6 flex flex-col sm:flex-row justify-between items-center gap-3">
+      <p class="text-white/25 text-xs">© 2025 Costo360. Hecho en Barranquilla, Colombia.</p>
+      <p class="text-white/25 text-xs">Plataforma B2B para talleres de piedra natural</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════ -->
+<script>
+(function () {
+  'use strict';
+
+  /* ── Navbar scroll state ── */
+  const navbar = document.getElementById('navbar');
+  const onScroll = () => {
+    if (window.scrollY > 20) {
+      navbar.classList.add('navbar-blur');
+    } else {
+      navbar.classList.remove('navbar-blur');
+    }
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* ── Scroll reveal ── */
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          revealObserver.unobserve(e.target);
+        }
+      });
+    },
+    { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+  );
+  revealEls.forEach((el) => revealObserver.observe(el));
+
+  /* ── FAQ accordion ── */
+  document.querySelectorAll('.faq-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const answer = btn.nextElementSibling;
+      const icon = btn.querySelector('.faq-icon');
+      const isOpen = answer.classList.contains('open');
+
+      // Close all
+      document.querySelectorAll('.faq-answer').forEach((a) => a.classList.remove('open'));
+      document.querySelectorAll('.faq-icon').forEach((i) => {
+        i.style.transform = '';
+      });
+      document.querySelectorAll('.faq-btn').forEach((b) => b.setAttribute('aria-expanded', 'false'));
+
+      if (!isOpen) {
+        answer.classList.add('open');
+        icon.style.transform = 'rotate(180deg)';
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  /* ── Particle canvas ── */
+  const canvas = document.getElementById('particles-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  let W, H, particles = [];
+  const PARTICLE_COUNT = 55;
+
+  const resize = () => {
+    W = canvas.width = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  };
+  resize();
+  window.addEventListener('resize', resize, { passive: true });
+
+  const rand = (min, max) => Math.random() * (max - min) + min;
+
+  const COLORS = ['rgba(31,111,84,', 'rgba(201,164,92,', 'rgba(42,144,112,'];
+
+  for (let i = 0; i < PARTICLE_COUNT; i++) {
+    particles.push({
+      x: rand(0, 1),
+      y: rand(0, 1),
+      r: rand(1, 3),
+      vx: rand(-0.0001, 0.0001),
+      vy: rand(-0.00015, -0.00005),
+      color: COLORS[Math.floor(rand(0, COLORS.length))],
+      alpha: rand(0.2, 0.7),
+    });
+  }
+
+  let animId;
+  const animate = () => {
+    ctx.clearRect(0, 0, W, H);
+    particles.forEach((p) => {
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.y < -0.02) p.y = 1.02;
+      if (p.x < -0.02) p.x = 1.02;
+      if (p.x > 1.02) p.x = -0.02;
+
+      ctx.beginPath();
+      ctx.arc(p.x * W, p.y * H, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = p.color + p.alpha + ')';
+      ctx.fill();
+    });
+    animId = requestAnimationFrame(animate);
+  };
+
+  // Pause when not visible
+  const heroSection = document.querySelector('section');
+  const heroObserver = new IntersectionObserver(
+    ([e]) => {
+      if (e.isIntersecting) {
+        animate();
+      } else {
+        cancelAnimationFrame(animId);
+      }
+    },
+    { threshold: 0 }
+  );
+  if (heroSection) heroObserver.observe(heroSection);
+  else animate();
+
+  /* ── Smooth mobile nav ── */
+  document.querySelectorAll('a[href^="#"]').forEach((a) => {
+    a.addEventListener('click', (e) => {
+      const href = a.getAttribute('href');
+      if (href === '#') return;
+      const target = document.querySelector(href);
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
