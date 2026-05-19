@@ -201,12 +201,8 @@
 </head>
 <body>
 
-<!-- ════════════════════════════════════════
-     NAVBAR
-════════════════════════════════════════ -->
 <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
   <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-    <!-- Logo -->
     <a href="#" class="flex items-center gap-2.5 cursor-pointer" aria-label="Costo360 home">
       <div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center glow-green flex-shrink-0">
         <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -216,7 +212,6 @@
       <span class="font-serif font-semibold text-xl text-white">Costo<span class="text-gold">360</span></span>
     </a>
 
-    <!-- Desktop links -->
     <ul class="hidden md:flex items-center gap-8 text-sm font-medium text-white/60">
       <li><a href="#features" class="hover:text-white transition-colors duration-200 cursor-pointer">Funciones</a></li>
       <li><a href="#como-funciona" class="hover:text-white transition-colors duration-200 cursor-pointer">Cómo funciona</a></li>
@@ -224,10 +219,9 @@
       <li><a href="#faq" class="hover:text-white transition-colors duration-200 cursor-pointer">FAQ</a></li>
     </ul>
 
-    <!-- CTAs -->
     <div class="flex items-center gap-3">
-      <a href="#" class="hidden sm:inline-flex text-sm font-medium text-white/70 hover:text-white transition-colors duration-200 cursor-pointer">Iniciar sesión</a>
-      <a href="#" class="inline-flex items-center gap-1.5 bg-primary hover:bg-primary-light text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors duration-200 cursor-pointer glow-green">
+      <a href="https://app.costo360.com" class="hidden sm:inline-flex text-sm font-medium text-white/70 hover:text-white transition-colors duration-200 cursor-pointer">Iniciar sesión</a>
+      <a href="https://app.costo360.com" class="inline-flex items-center gap-1.5 bg-primary hover:bg-primary-light text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors duration-200 cursor-pointer glow-green">
         Empieza Gratis
         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
@@ -237,21 +231,15 @@
   </div>
 </nav>
 
-<!-- ════════════════════════════════════════
-     HERO
-════════════════════════════════════════ -->
 <section class="hero-bg relative min-h-screen flex flex-col items-center justify-center pt-16 overflow-hidden">
   <canvas id="particles-canvas" aria-hidden="true"></canvas>
 
-  <!-- Marble veins decoration -->
   <div class="absolute inset-0 marble-texture pointer-events-none opacity-30" aria-hidden="true"></div>
 
-  <!-- Glow orbs -->
   <div class="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-primary/10 blur-3xl pointer-events-none" aria-hidden="true"></div>
   <div class="absolute bottom-1/3 right-1/4 w-64 h-64 rounded-full bg-gold/8 blur-3xl pointer-events-none" aria-hidden="true"></div>
 
   <div class="relative z-10 max-w-5xl mx-auto px-6 text-center">
-    <!-- Badge -->
     <div class="inline-flex items-center gap-2 glass px-4 py-2 rounded-full text-sm font-medium text-gold mb-8 reveal">
       <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
         <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.27 5.82 21 7 14.14 2 9.27l6.91-1.01L12 2z"/>
@@ -259,7 +247,6 @@
       Plataforma B2B para talleres de piedra
     </div>
 
-    <!-- Headline -->
     <h1 class="font-serif font-bold text-5xl sm:text-6xl md:text-7xl text-white leading-tight mb-6 reveal reveal-delay-1">
       Cotiza con<br />
       <span class="text-gradient">precisión industrial</span>
@@ -269,9 +256,8 @@
       Costo360 es la plataforma B2B que permite a talleres de mármol, granito y piedra cotizar, optimizar cortes y controlar proyectos con la potencia de la IA.
     </p>
 
-    <!-- CTAs -->
     <div class="flex flex-col sm:flex-row gap-4 justify-center mb-16 reveal reveal-delay-3">
-      <a href="#" class="inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-light text-white font-semibold text-base px-8 py-4 rounded-xl transition-all duration-200 cursor-pointer glow-green">
+      <a href="https://app.costo360.com" class="inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-light text-white font-semibold text-base px-8 py-4 rounded-xl transition-all duration-200 cursor-pointer glow-green">
         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
         </svg>
@@ -286,7 +272,6 @@
       </a>
     </div>
 
-    <!-- Stats -->
     <div class="flex flex-col sm:flex-row gap-8 sm:gap-16 justify-center items-center reveal reveal-delay-4">
       <div class="text-center">
         <p class="font-serif text-3xl font-bold text-gradient">+200</p>
@@ -305,7 +290,6 @@
     </div>
   </div>
 
-  <!-- Scroll indicator -->
   <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/30 text-xs animate-bounce" aria-hidden="true">
     <span class="tracking-widest uppercase text-[10px]">Scroll</span>
     <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -316,9 +300,6 @@
 
 <div class="section-divider"></div>
 
-<!-- ════════════════════════════════════════
-     PROBLEMA / SOLUCIÓN
-════════════════════════════════════════ -->
 <section class="py-24 relative" id="problema">
   <div class="max-w-7xl mx-auto px-6">
     <div class="text-center mb-16 reveal">
@@ -331,7 +312,6 @@
     </div>
 
     <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-      <!-- Pain points -->
       <div class="glass rounded-2xl p-8 reveal reveal-delay-1">
         <div class="flex items-center gap-3 mb-6">
           <div class="w-8 h-8 rounded-full bg-red-500/15 flex items-center justify-center flex-shrink-0">
@@ -365,7 +345,6 @@
         </ul>
       </div>
 
-      <!-- Solution -->
       <div class="glass rounded-2xl p-8 border border-primary/30 reveal reveal-delay-2" style="box-shadow:0 0 40px rgba(31,111,84,0.15)">
         <div class="flex items-center gap-3 mb-6">
           <div class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
@@ -404,9 +383,6 @@
 
 <div class="section-divider"></div>
 
-<!-- ════════════════════════════════════════
-     FEATURES
-════════════════════════════════════════ -->
 <section class="py-24" id="features">
   <div class="max-w-7xl mx-auto px-6">
     <div class="text-center mb-16 reveal">
@@ -419,7 +395,6 @@
     </div>
 
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <!-- Feature 1 -->
       <article class="glass rounded-2xl p-7 animated-border cursor-pointer hover:border-primary/40 transition-all duration-300 reveal reveal-delay-1 group">
         <div class="w-12 h-12 rounded-xl bg-primary/15 flex items-center justify-center mb-5 group-hover:bg-primary/25 transition-colors duration-300">
           <svg class="w-6 h-6 text-primary-light" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
@@ -434,7 +409,6 @@
         </div>
       </article>
 
-      <!-- Feature 2 -->
       <article class="glass rounded-2xl p-7 animated-border cursor-pointer hover:border-primary/40 transition-all duration-300 reveal reveal-delay-2 group">
         <div class="w-12 h-12 rounded-xl bg-gold/10 flex items-center justify-center mb-5 group-hover:bg-gold/20 transition-colors duration-300">
           <svg class="w-6 h-6 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
@@ -449,7 +423,6 @@
         </div>
       </article>
 
-      <!-- Feature 3 -->
       <article class="glass rounded-2xl p-7 animated-border cursor-pointer hover:border-primary/40 transition-all duration-300 reveal reveal-delay-3 group">
         <div class="w-12 h-12 rounded-xl bg-primary/15 flex items-center justify-center mb-5 group-hover:bg-primary/25 transition-colors duration-300">
           <svg class="w-6 h-6 text-primary-light" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
@@ -464,7 +437,6 @@
         </div>
       </article>
 
-      <!-- Feature 4 -->
       <article class="glass rounded-2xl p-7 animated-border cursor-pointer hover:border-primary/40 transition-all duration-300 reveal reveal-delay-4 group">
         <div class="w-12 h-12 rounded-xl bg-gold/10 flex items-center justify-center mb-5 group-hover:bg-gold/20 transition-colors duration-300">
           <svg class="w-6 h-6 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
@@ -479,7 +451,6 @@
         </div>
       </article>
 
-      <!-- Feature 5 -->
       <article class="glass rounded-2xl p-7 animated-border cursor-pointer hover:border-primary/40 transition-all duration-300 reveal reveal-delay-5 group">
         <div class="w-12 h-12 rounded-xl bg-primary/15 flex items-center justify-center mb-5 group-hover:bg-primary/25 transition-colors duration-300">
           <svg class="w-6 h-6 text-primary-light" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
@@ -494,7 +465,6 @@
         </div>
       </article>
 
-      <!-- Feature 6 -->
       <article class="glass rounded-2xl p-7 animated-border cursor-pointer hover:border-primary/40 transition-all duration-300 reveal reveal-delay-6 group">
         <div class="w-12 h-12 rounded-xl bg-gold/10 flex items-center justify-center mb-5 group-hover:bg-gold/20 transition-colors duration-300">
           <svg class="w-6 h-6 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
@@ -514,11 +484,7 @@
 
 <div class="section-divider"></div>
 
-<!-- ════════════════════════════════════════
-     CÓMO FUNCIONA
-════════════════════════════════════════ -->
 <section class="py-24 relative" id="como-funciona">
-  <!-- bg accent -->
   <div class="absolute inset-0 bg-gradient-to-b from-dark via-dark-2 to-dark pointer-events-none" aria-hidden="true"></div>
 
   <div class="relative max-w-7xl mx-auto px-6">
@@ -532,11 +498,9 @@
     </div>
 
     <div class="relative max-w-4xl mx-auto">
-      <!-- Connector line (desktop) -->
       <div class="hidden md:block absolute top-16 left-1/2 -translate-x-1/2 w-px h-[calc(100%-8rem)] step-connector" aria-hidden="true"></div>
 
       <div class="space-y-12">
-        <!-- Step 1 -->
         <div class="flex flex-col md:flex-row items-center gap-8 reveal reveal-delay-1">
           <div class="md:w-1/2 md:text-right order-2 md:order-1">
             <h3 class="text-white font-semibold text-2xl mb-2 font-serif">Configura tu taller</h3>
@@ -571,7 +535,6 @@
           </div>
         </div>
 
-        <!-- Step 2 -->
         <div class="flex flex-col md:flex-row items-center gap-8 reveal reveal-delay-2">
           <div class="md:w-1/2 order-3 md:order-1">
             <div class="glass rounded-xl p-5">
@@ -596,7 +559,6 @@
           </div>
         </div>
 
-        <!-- Step 3 -->
         <div class="flex flex-col md:flex-row items-center gap-8 reveal reveal-delay-3">
           <div class="md:w-1/2 md:text-right order-2 md:order-1">
             <h3 class="text-white font-semibold text-2xl mb-2 font-serif">Exporta y gana</h3>
@@ -628,9 +590,6 @@
 
 <div class="section-divider"></div>
 
-<!-- ════════════════════════════════════════
-     TESTIMONIALS
-════════════════════════════════════════ -->
 <section class="py-24" id="testimonios">
   <div class="max-w-7xl mx-auto px-6">
     <div class="text-center mb-16 reveal">
@@ -642,7 +601,6 @@
     </div>
 
     <div class="grid md:grid-cols-3 gap-6">
-      <!-- Testimonial 1 -->
       <blockquote class="glass rounded-2xl p-7 flex flex-col gap-5 reveal reveal-delay-1">
         <div class="flex gap-1" aria-label="5 de 5 estrellas">
           <svg class="w-4 h-4 text-gold" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
@@ -663,7 +621,6 @@
         </footer>
       </blockquote>
 
-      <!-- Testimonial 2 -->
       <blockquote class="glass rounded-2xl p-7 flex flex-col gap-5 border border-gold/20 reveal reveal-delay-2" style="box-shadow:0 0 30px rgba(201,164,92,0.1)">
         <div class="flex gap-1" aria-label="5 de 5 estrellas">
           <svg class="w-4 h-4 text-gold" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
@@ -684,7 +641,6 @@
         </footer>
       </blockquote>
 
-      <!-- Testimonial 3 -->
       <blockquote class="glass rounded-2xl p-7 flex flex-col gap-5 reveal reveal-delay-3">
         <div class="flex gap-1" aria-label="5 de 5 estrellas">
           <svg class="w-4 h-4 text-gold" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
@@ -710,9 +666,6 @@
 
 <div class="section-divider"></div>
 
-<!-- ════════════════════════════════════════
-     PRICING
-════════════════════════════════════════ -->
 <section class="py-24" id="precios">
   <div class="max-w-7xl mx-auto px-6">
     <div class="text-center mb-16 reveal">
@@ -725,7 +678,6 @@
     </div>
 
     <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-      <!-- Básico -->
       <div class="glass rounded-2xl p-8 flex flex-col reveal reveal-delay-1">
         <div class="mb-6">
           <div class="text-white/50 text-sm font-medium mb-1">Básico</div>
@@ -760,12 +712,11 @@
             Nesting inteligente
           </li>
         </ul>
-        <a href="#" class="block text-center glass-light text-white font-semibold py-3 rounded-xl hover:bg-white/10 transition-colors duration-200 cursor-pointer text-sm">
+        <a href="https://app.costo360.com" class="block text-center glass-light text-white font-semibold py-3 rounded-xl hover:bg-white/10 transition-colors duration-200 cursor-pointer text-sm">
           Empieza gratis
         </a>
       </div>
 
-      <!-- Pro (Popular) -->
       <div class="glass rounded-2xl p-8 flex flex-col pricing-popular relative reveal reveal-delay-2">
         <div class="absolute -top-3 left-1/2 -translate-x-1/2">
           <span class="bg-gold text-dark text-xs font-bold px-4 py-1 rounded-full tracking-wide">MÁS POPULAR</span>
@@ -807,12 +758,11 @@
             Hasta 3 usuarios
           </li>
         </ul>
-        <a href="#" class="block text-center bg-gold hover:bg-gold-light text-dark font-bold py-3 rounded-xl transition-colors duration-200 cursor-pointer text-sm glow-gold">
+        <a href="https://app.costo360.com" class="block text-center bg-gold hover:bg-gold-light text-dark font-bold py-3 rounded-xl transition-colors duration-200 cursor-pointer text-sm glow-gold">
           Empezar con Pro
         </a>
       </div>
 
-      <!-- Empresa -->
       <div class="glass rounded-2xl p-8 flex flex-col reveal reveal-delay-3">
         <div class="mb-6">
           <div class="text-white/50 text-sm font-medium mb-1">Empresa</div>
@@ -857,9 +807,6 @@
 
 <div class="section-divider"></div>
 
-<!-- ════════════════════════════════════════
-     FAQ
-════════════════════════════════════════ -->
 <section class="py-24" id="faq">
   <div class="max-w-3xl mx-auto px-6">
     <div class="text-center mb-16 reveal">
@@ -871,7 +818,6 @@
     </div>
 
     <div class="space-y-3">
-      <!-- FAQ Item -->
       <div class="glass rounded-xl overflow-hidden reveal reveal-delay-1">
         <button class="faq-btn w-full flex items-center justify-between px-6 py-5 text-left cursor-pointer hover:bg-white/5 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary" aria-expanded="false">
           <span class="text-white font-medium pr-4">¿Necesito instalar algo para usar Costo360?</span>
@@ -937,9 +883,6 @@
 
 <div class="section-divider"></div>
 
-<!-- ════════════════════════════════════════
-     CTA FINAL
-════════════════════════════════════════ -->
 <section class="py-24 relative overflow-hidden" id="cta">
   <div class="absolute inset-0 hero-bg opacity-60 pointer-events-none" aria-hidden="true"></div>
   <div class="absolute inset-0 marble-texture opacity-20 pointer-events-none" aria-hidden="true"></div>
@@ -955,7 +898,7 @@
         Únete a más de 200 talleres en Colombia que ya cotizan más rápido, pierden menos material y ganan más proyectos.
       </p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-        <a href="#" class="inline-flex items-center gap-2 bg-primary hover:bg-primary-light text-white font-bold text-base px-10 py-4 rounded-xl transition-all duration-200 cursor-pointer glow-green">
+        <a href="https://app.costo360.com" class="inline-flex items-center gap-2 bg-primary hover:bg-primary-light text-white font-bold text-base px-10 py-4 rounded-xl transition-all duration-200 cursor-pointer glow-green">
           <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
           </svg>
@@ -967,13 +910,9 @@
   </div>
 </section>
 
-<!-- ════════════════════════════════════════
-     FOOTER
-════════════════════════════════════════ -->
 <footer class="border-t border-white/8 py-12">
   <div class="max-w-7xl mx-auto px-6">
     <div class="grid md:grid-cols-4 gap-10 mb-10">
-      <!-- Brand -->
       <div class="md:col-span-1">
         <div class="flex items-center gap-2.5 mb-4">
           <div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center flex-shrink-0">
@@ -985,19 +924,16 @@
         </div>
         <p class="text-white/40 text-sm leading-relaxed">Plataforma B2B de costos para talleres de piedra natural en Colombia.</p>
         <div class="flex gap-3 mt-5">
-          <!-- LinkedIn -->
           <a href="#" class="w-8 h-8 glass-light rounded-lg flex items-center justify-center text-white/40 hover:text-white hover:bg-white/10 transition-all duration-200 cursor-pointer" aria-label="LinkedIn">
             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
             </svg>
           </a>
-          <!-- Instagram -->
           <a href="#" class="w-8 h-8 glass-light rounded-lg flex items-center justify-center text-white/40 hover:text-white hover:bg-white/10 transition-all duration-200 cursor-pointer" aria-label="Instagram">
             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
             </svg>
           </a>
-          <!-- WhatsApp -->
           <a href="#" class="w-8 h-8 glass-light rounded-lg flex items-center justify-center text-white/40 hover:text-white hover:bg-white/10 transition-all duration-200 cursor-pointer" aria-label="WhatsApp">
             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
@@ -1006,7 +942,6 @@
         </div>
       </div>
 
-      <!-- Product -->
       <nav aria-label="Producto">
         <h3 class="text-white font-semibold text-sm mb-4">Producto</h3>
         <ul class="space-y-2.5">
@@ -1017,7 +952,6 @@
         </ul>
       </nav>
 
-      <!-- Company -->
       <nav aria-label="Empresa">
         <h3 class="text-white font-semibold text-sm mb-4">Empresa</h3>
         <ul class="space-y-2.5">
@@ -1027,7 +961,6 @@
         </ul>
       </nav>
 
-      <!-- Legal -->
       <nav aria-label="Legal">
         <h3 class="text-white font-semibold text-sm mb-4">Legal</h3>
         <ul class="space-y-2.5">
@@ -1044,9 +977,6 @@
   </div>
 </footer>
 
-<!-- ════════════════════════════════════════
-     JAVASCRIPT
-════════════════════════════════════════ -->
 <script>
 (function () {
   'use strict';
